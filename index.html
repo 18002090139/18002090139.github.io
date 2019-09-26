@@ -1,8 +1,19 @@
 <html>
 <body>
-<h1>我叫薛苇鹏.</h1>
-    <p>我的学号是<span id="studentnumber">18002090139</span>
+<h1>我叫<span id="myname"></span></h1>
+    <p>我的学号是<span id="mynumber"></span>
     </p>
-    <img src="./matrix.png">
+    <input type="date">
+    <img id="logo" src="./dj.jpg"  style="border-radius:10px 20px 30px 40px">
+    <img src="./matrix.png"><br>
+    <script src="jquery-3.4.1.js"></script>
+    <script>
+        $(function(){
+            $.get("./data.json",function(result){
+                $("#myname").text(result.myname);
+                $("#mynumber").text(result.mynumber);
+            });
+        })
+    </script>
 </body>
 </html>
