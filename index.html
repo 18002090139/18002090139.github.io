@@ -1,50 +1,55 @@
 <html>
 <body>
 <h1>我叫<span id="myname"></span></h1>
+
     <p>我的学号是<span id="mynumber"></span>
     </p>
-    <a id="btn" href="login.html">去登陆</a>
-    <input type="date">
-    <img id="logo" src="./dj.jpg"  style="border-radius:10px 20px 30px 40px">
-    <img src="./matrix.png"><br>
+    <a id="alogin" href="login.html">去登录</a>
+    <a id="alogout" href="#">去注销</a>
+
+    <input type="text">
+    <button>添加</button>
+
     <script src="jquery-3.4.1.js"></script>
     <script>
-//         $(function(){
-//            var callback=function(result){
-//                 $("#myname").text(result.myname);
-//                 $("#mynumber").text(result.mynumber);
-//             }
-//             $.post("http://10.30.201.89:8585/data.json",{snum:18002090139},callback) 
-//         $.ajax({
-//             type: "POST",
-//             url: "http://10.30.201.89:8585/data.json",
-//             data: "name=xwp&location=chinese",
-//             callback,
-//             })
-// });
-$(function(){
-    var callback=function(result){
-        $("#myname").text(result.myname);
-        $("#mynumber").text(result.mynumber);
-    };
+        $(function(){
 
-    $.ajax({
-        url:"http://127.0.0.1:8585/userinfo",
-        type:"POST",
-        contentType:"application/json",
-        xhrFields:{withCredentials:true},
-        success:callback
-    })
-    //$.post("http://127.0.0.1:8585/data.json",callback);
-})
- 
-$("#btn").click(function(){
-    $.post("http://127.0.0.1:8585/userinfo",function(result){
-        $("#myname").text(result.myname);
-        $("#mynumber").text(result.mynumber);
-    });
-})
+            var callback=function (result){
+                if(!result || !result.myname){
+                    $("#alogout").hide();
+                }else{
+                    $("#myname").text(result.myname);
+                    $("#mynumber").text(result.mynumber);
+                    $("#alogin").hide();
+                }
+             }
+             $.ajax({
+                type:"POST",
+                xhrFields: {
+                        withCredentials: true
+                },
+                url:"http://127.0.0.1:8585/userinfo",
+                contentType:"application/json",
+                success:callback
+             });
+
+            $("#alogout").click(function(){
+                $.ajax({
+                type:"POST",
+                xhrFields: {
+                        withCredentials: true
+                },
+                url:"http://127.0.0.1:8585/logout",
+                success:function(){
+                    location.href="index.html";
+                }
+             });
+            });
+
+   
+        })
+
+
     </script>
 </body>
-
 </html>
