@@ -3,17 +3,48 @@
 <h1>我叫<span id="myname"></span></h1>
     <p>我的学号是<span id="mynumber"></span>
     </p>
+    <a id="btn" href="login.html">去登陆</a>
     <input type="date">
     <img id="logo" src="./dj.jpg"  style="border-radius:10px 20px 30px 40px">
     <img src="./matrix.png"><br>
     <script src="jquery-3.4.1.js"></script>
     <script>
-        $(function(){
-            $.get("./data.json",function(result){
-                $("#myname").text(result.myname);
-                $("#mynumber").text(result.mynumber);
-            });
-        })
+//         $(function(){
+//            var callback=function(result){
+//                 $("#myname").text(result.myname);
+//                 $("#mynumber").text(result.mynumber);
+//             }
+//             $.post("http://10.30.201.89:8585/data.json",{snum:18002090139},callback) 
+//         $.ajax({
+//             type: "POST",
+//             url: "http://10.30.201.89:8585/data.json",
+//             data: "name=xwp&location=chinese",
+//             callback,
+//             })
+// });
+$(function(){
+    var callback=function(result){
+        $("#myname").text(result.myname);
+        $("#mynumber").text(result.mynumber);
+    };
+
+    $.ajax({
+        url:"http://127.0.0.1:8585/userinfo",
+        type:"POST",
+        contentType:"application/json",
+        xhrFields:{withCredentials:true},
+        success:callback
+    })
+    //$.post("http://127.0.0.1:8585/data.json",callback);
+})
+ 
+$("#btn").click(function(){
+    $.post("http://127.0.0.1:8585/userinfo",function(result){
+        $("#myname").text(result.myname);
+        $("#mynumber").text(result.mynumber);
+    });
+})
     </script>
 </body>
+
 </html>
